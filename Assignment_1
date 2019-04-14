@@ -67,13 +67,16 @@ gunzip GRCh38.p12.genome.fa.gz
 
 #BWA Alignment:
 conda install -c bioconda bwa
+#index your genome:
 ~/workdir/Assignment$ mkdir -p bwa_align/bwaIndex && cd bwa_align/bwaIndex
 ~/workdir/Assignment/bwa_align/bwaIndex$ ln -s ~/workdir/Assignment/GRCh38.p12.genome.fa .
 ~/workdir/Assignment/bwa_align/bwaIndex$ bwa index -a bwtsw GRCh38.p12.genome.fa
 
-#index your genome:
+
 cd ~/ workdir/Assignment/bwa_align 
 /usr/bin/time -v bwa mem bwaIndex/GRCh38.p12.genome.fa $newf1 $newf2 > SRR8797509.sam
+
+
 
 
 
