@@ -9,7 +9,7 @@ source activate ngs1
 conda install -c bioconda seqkit
            
 #For Unshuffled: Construct 5 Samples, each sample contains two parts
-seqkit split2 -1 SRR8797509_1.fastq -2 SRR8797509_2.fastq -p 2 -s 1000000 -O out –f
+seqkit split2 -1 SRR8797509_1.fastq -2 SRR8797509_2.fastq -p 5 -s 1000000 -O out –f
  
 #For Shuffled:
 #Download the file from here:  
