@@ -1,1 +1,77 @@
+1-	Data Download:
+wget -c ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR879/SRR8797509/SRR8797509.sra
+
+2-	 Convert the sra file to fastq
+fastq-dump -I --split-files SRR879750.sra
+
+3-	Prepare the data:
+-source activate ngs1
+-conda install -c bioconda seqkit
+           
+For Unshuffled:
+Construct 5 Samples, each sample contains two parts
+seqkit split2 -1 SRR8797509_1.fastq -2 SRR8797509_2.fastq -p 2 -s 1000000 -O out –f
+ 
+For Shuffled:
+-Download the file from here:  https://ngscourse1.slack.com/archives/CGLTJSMQS/p1554753917030800
+-Unzip it:
+tar -xf shuffled_SRR8797509_1.part_001.tar.xz
+tar -xf shuffled_SRR8797509_2.part_001.tar.xz
+-Split the files (1M reads per file)
+seqkit split2 -1 SRR8797509_1.part_001.fastq -2 SRR8797509_2.part_001.fastq -p 2 -s 1000000 -O out –f
+
+4-	FASTQ Quality Control
+source activate ngs1
+conda install -c bioconda fastqc
+conda install -c bioconda multiqc
+(ngs1) ngs-01@ngs01-VirtualBox:~/workdir/Assignment/out$
+fastqc -t 1 -f fastq -noextract shuffled_SRR8797509_1.part_001.part_001.fastq SRR8797509_1.part_001.fastq
+fastqc -t 1 -f fastq -noextract shuffled_SRR8797509_1.part_001.part_002.fastq SRR8797509_1.part_002.fastq
+5-	Trimming
+source activate ngs1	
+conda install -c bioconda trimmomatic
+
+Mild Trimming for unshuffled reads:
+f1="$HOME/workdir/Assignment/SRR8797509_1.pe.fastq"
+f2="$HOME/workdir/Assignment/ SRR8797509_2.pe.fastq"
+newf1="$HOME/workdir/Assignment/SRR8797509_1.pe.trim.fastq"
+newf2="$HOME/workdir/Assignment/ SRR8797509_2.pe.trim.fastq"
+newf1U="$HOME/workdir/Assignment/ SRR8797509_1.se.trim.fastq"
+newf2U="$HOME/workdir/Assignment/ SRR8797509_2.se.trim.fastq"
+adap="/home/ngs-01/miniconda3/envs/ngs1/share/trimmomatic-0.38-1/adapters"
+
+trimmomatic PE -threads 1 -phred33 -trimlog trimLogFile -summary statsSummaryFile  $f1 $f2 $newf1 $newf1U $newf2 $newf2U \
+ILLUMINACLIP:$adap/TruSeq3-PE.fa:2:30:10:1 SLIDINGWINDOW:4:15 MINLEN:36
+
+Aggressive Trimming for shuffled reads:
+f1="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.pe.fastq"
+f2="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.pe.fastq"
+newf1="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.pe.trim.fastq"
+newf2="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.pe.trim.fastq"
+newf1U="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.se.trim.fastq"
+newf2U="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.se.trim.fastq"
+adap="/home/ngs-01/miniconda3/envs/ngs1/share/trimmomatic-0.38-1/adapters"
+
+trimmomatic PE -threads 1 -phred33 -trimlog trimLogFile -summary statsSummaryFile  $f1 $f2 $newf1 $newf1U $newf2 $newf2U \
+ILLUMINACLIP:$adap/TruSeq3-PE.fa:2:30:10:1 SLIDINGWINDOW:4:30 MINLEN:36
+6-	Alignment
+Reference genome: 
+Downloaded from https://www.gencodegenes.org/human/
+gunzip gencode.v30.annotation.gtf.gz
+conda install -c bioconda blast
+gunzip GRCh38.p12.genome.fa.gz
+BWA Alignment:
+conda install -c bioconda bwa
+~/workdir/Assignment$ mkdir -p bwa_align/bwaIndex && cd bwa_align/bwaIndex
+~/workdir/Assignment/bwa_align/bwaIndex$ ln -s ~/workdir/Assignment/GRCh38.p12.genome.fa .
+~/workdir/Assignment/bwa_align/bwaIndex$ bwa index -a bwtsw GRCh38.p12.genome.fa
+index your genome
+cd ~/ workdir/Assignment/bwa_align 
+/usr/bin/time -v bwa mem bwaIndex/GRCh38.p12.genome.fa $newf1 $newf2 > SRR8797509.sam
+
+
+
+
+
+
 
