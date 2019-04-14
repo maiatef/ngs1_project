@@ -78,9 +78,19 @@ conda install -c bioconda bwa
 ~/workdir/Assignment/bwa_align/bwaIndex$ ln -s ~/workdir/Assignment/GRCh38.p12.genome.fa .
 ~/workdir/Assignment/bwa_align/bwaIndex$ bwa index -a bwtsw GRCh38.p12.genome.fa
 
+#I repeated the previous steps several times and I keep on recieving this message!!
+#[bwt_gen] Finished constructing BWT in 718 iterations.
+#[bwa_index] 4359.69 seconds elapse.
+#[bwa_index] Update BWT... [bwt_bwtupdate_core] Failed to allocate 3252208928 bytes at bwtindex.c line 158: Cannot allocate memory
+#I said I will proceed to the next step and see the results.
 
-cd ~/ workdir/Assignment/bwa_align 
+#~/ workdir/Assignment/bwa_align 
 /usr/bin/time -v bwa mem bwaIndex/GRCh38.p12.genome.fa $newf1 $newf2 > SRR8797509.sam
+
+#I got an empty file ..the file SRR8797509.sam was created but it was empty, I have no idea is this because of the memory issue I have and
+#The terminal keep on mentioning it or what is the problem....no clue!!
+
+#I will try hisat2
 
 
 
