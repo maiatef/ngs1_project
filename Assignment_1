@@ -112,6 +112,16 @@ cd ~/ workdir/Assignment/bwa_align
 
 
 #I will try hisat2
+# Indexing
+#~/workdir/Assignment$ 
+mkdir -p ~hisat_align/hisatIndex && cd ~hisat_align/hisatIndex
+ln -s ~/workdir/Assignment/GRCh38.p12.genome.fa .
+hisat2_extract_splice_sites.py ~/workdir/Assignment/gencode.v30.annotation.gtf > splicesites.tsv
+hisat2_extract_exons.py ~/workdir/Assignment/gencode.v30.annotation.gtf > exons.tsv
+hisat2-build -p 1 --ss splicesites.tsv --exon exons.tsv GRCh38.p12.genome.fa GRCh38.p12.genome
+
+#A message popped out that I have low disk space, I can't increase it any more !!
+
 
 
 
