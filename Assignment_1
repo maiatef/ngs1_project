@@ -55,15 +55,15 @@ trimmomatic PE -threads 1 -phred33 -trimlog trimLogFile -summary statsSummaryFil
 ILLUMINACLIP:$adap/TruSeq3-PE.fa:2:30:10:1 SLIDINGWINDOW:4:15 MINLEN:36
 
 #Aggressive Trimming for shuffled reads:
-f1="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.pe.fastq"
-f2="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.pe.fastq"
-newf1="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.pe.trim.fastq"
-newf2="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.pe.trim.fastq"
-newf1U="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.se.trim.fastq"
-newf2U="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.se.trim.fastq"
+f1_sh="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.pe.fastq"
+f2_sh="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.pe.fastq"
+newf1_sh="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.pe.trim.fastq"
+newf2_sh="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.pe.trim.fastq"
+newf1U_sh="$HOME/workdir/Assignment/shuffled_SRR8797509_1.part_001.se.trim.fastq"
+newf2U_sh="$HOME/workdir/Assignment/shuffled_SRR8797509_2.part_001.se.trim.fastq"
 adap="/home/ngs-01/miniconda3/envs/ngs1/share/trimmomatic-0.38-1/adapters"
 
-trimmomatic PE -threads 1 -phred33 -trimlog trimLogFile -summary statsSummaryFile  $f1 $f2 $newf1 $newf1U $newf2 $newf2U \
+trimmomatic PE -threads 1 -phred33 -trimlog trimLogFile -summary statsSummaryFile  $f1_sh $f2_sh $newf1_sh $newf1U_sh $newf2_sh $newf2U_sh \
 ILLUMINACLIP:$adap/TruSeq3-PE.fa:2:30:10:1 SLIDINGWINDOW:4:30 MINLEN:36
 
 #6-Alignment
