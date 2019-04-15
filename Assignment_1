@@ -66,6 +66,7 @@ adap="/home/ngs-01/miniconda3/envs/ngs1/share/trimmomatic-0.38-1/adapters"
 trimmomatic PE -threads 1 -phred33 -trimlog trimLogFile -summary statsSummaryFile  $f1_sh $f2_sh $newf1_sh $newf1U_sh $newf2_sh $newf2U_sh \
 ILLUMINACLIP:$adap/TruSeq3-PE.fa:2:30:10:1 SLIDINGWINDOW:4:30 MINLEN:36
 
+#1st trial !!
 #6-Alignment
 #Reference genome: Downloaded from https://www.gencodegenes.org/human/
 
@@ -89,6 +90,26 @@ conda install -c bioconda bwa
 
 #I got an empty file ..the file SRR8797509.sam was created but it was empty, I have no idea is this because of the memory issue I have and
 #The terminal keep on mentioning it or what is the problem....no clue!!
+
+#2nd trials
+#I increased the memory of the VM and repeated the indexing step and it finally worked l 7dl ..and i used the transcriptome reference
+gunzip gencode.v30.annotation.gtf.gz
+gunzip gencode.v30.transcripts.fa.gz
+gunzip GRCh38.p12.genome.fa.gz
+
+#BWA Alignment:
+conda install -c bioconda bwa
+~/workdir/Assignment$ mkdir -p bwa_align/bwaIndex && cd bwa_align/bwaIndex
+
+#index your genome
+~/workdir/Assignment/bwa_align/bwaIndex$ ln -s ~/workdir/Assignment/gencode.v30.transcripts.fa .
+~/workdir/Assignment/bwa_align/bwaIndex$ bwa index -a bwtsw gencode.v30.transcripts.fa
+
+#this step didn't work again ...an empty file is the output, i will try to check whether i entered the wrong files.
+#i echoed the variables and they were not recognized
+cd ~/ workdir/Assignment/bwa_align 
+/usr/bin/time -v bwa mem bwaIndex/ gencode.v30.transcripts.fa $newf1U $newf2U > SRR8797509.sam
+
 
 #I will try hisat2
 
