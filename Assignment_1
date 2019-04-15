@@ -269,7 +269,28 @@ Options (defaults in parentheses):
 Error: Must specify at least one read input with -U/-1/-2/--sra-acc
 (ERR): hisat2-align exited with value 1
 
-# I will try to use different inputs ...will use the files rather than assigning variables.
+# I will try to use different inputs ...will use the files rather than assigning variables, i tried the raw untrimmed files
+#this is the message i got
+#Warning: Same mate file ".part_001.fastq" appears as argument to both -1 and -2
+#Warning: Could not open read file ".part_001.fastq" for reading; skipping...
+#Error: No input read files were valid
+#(ERR): hisat2-align exited with value 1
+
+#I guess the problem is that i added the files and added $ sign as if they are variables, so i deleted the $ sign and I moved the files to the 
+#same folder hisat_align
+#~/workdir/Assignment/~hisat_align$ 
+
+hisat2 -p 1 -x hisatIndex/GRCh38.p12.genome --dta --rna-strandness RF -1 shuffled_SRR8797509_1.fastq -2 shuffled_SRR8797509_2.fastq -S shuffled_SRR8797509_Rep1.sam
+
+#His the error message i recieved
+Error reading _rstarts[] array: 13960, 21732
+Error: Encountered internal HISAT2 exception (#1)
+Command: /home/ngs-01/miniconda3/envs/ngs1/bin/hisat2-align-s --wrapper basic-0 -p 1 -x hisatIndex/GRCh38.p12.genome --dta --rna-strandness RF -S shuffled_SRR8797509_Rep1.sam -1 shuffled_SRR8797509_1.fastq -2 shuffled_SRR8797509_2.fastq 
+(ERR): hisat2-align exited with value 1
+
+#I couldn't get beyond this step!
+
+
 
 
 
