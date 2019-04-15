@@ -122,7 +122,30 @@ hisat2-build -p 1 --ss splicesites.tsv --exon exons.tsv GRCh38.p12.genome.fa GRC
 
 #A message popped out that I have low disk space, I can't increase it any more !!
 
-
+#this message showed up...in terminal...although i removed everything and raw data..
+#FTable chars: 10
+  Strings: unpacked
+  Local offset rate: 3 (one in 8)
+  Local fTable chars: 6
+  Local sequence length: 57344
+  Local sequence overlap between two consecutive indexes: 1024
+  Endianness: little
+  Actual local endianness: little
+  Sanity checking: disabled
+  Assertions: disabled
+  Random seed: 0
+  Sizeofs: void*:8, int:4, long:8, size_t:8
+Input files DNA, FASTA:
+  GRCh38.p12.genome.fa
+Reading reference sizes
+  Time reading reference sizes: 00:00:45
+Calculating joined length
+Writing header
+Reserving space for joined string
+Joining reference sequences
+  Time to join reference sequences: 00:00:31
+  Time to read SNPs and splice sites: 00:00:04
+  Ran out of memory; automatically trying more memory-economical parameters.
 
 
 
